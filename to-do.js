@@ -15,7 +15,7 @@ function addTask() {
     const task = {
       id: Date.now(),
       name: taskName,
-      alarm: alarmTime,
+      alarm: alarmTime ? new Date(alarmTime) : null,
     };
     tasks.push(task);
     newTaskInput.value = '';
@@ -25,8 +25,8 @@ function addTask() {
       message.innerText = '';
     }, 2000);
     addToTaskList(taskName);
-    if (alarmTime) {
-      const time = new Date(alarmTime);
+    if (task.alarm && task.alarm < new Date()) {
+      const time = task.alarm;
       setTimeout(() => {
         alert('Time\'s up. I hope you made it.');
       }, time - Date.now());
@@ -40,7 +40,7 @@ function renderTask(task) {
   taskElement.innerHTML = `
     <input type="checkbox" id="chk-${task.id}">
     <label for="chk-${task.id}">${task.name}</label>
-    ${task.alarm ? `<input type="time" value="${task.alarm}">` : ''}
+    ${task.alarm ? `<input type="time" value="${get24HourFormat(task.alarm)}" disabled>` : ''}
   `;
   taskElement.addEventListener('click', function() {
     this.classList.toggle('selected');
@@ -56,6 +56,13 @@ function renderTask(task) {
   });
   tasksContainer.appendChild(taskElement);
 }
+
+function get24HourFormat(date) {
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
 
 function editTask(id, event) {
   event.stopPropagation();
@@ -106,8 +113,22 @@ function viewAllTasks() {
   tasksContainer.innerHTML = '';
   tasks.forEach(task => renderTask(task));
   modal.style.display = 'block';
+  updateTaskDetails();
+}
+
+function updateTaskDetails() {
+  const selectedTask = tasks.find(task => task.id === parseInt(document.querySelector('.selected').id.split('-')[1]));
+  document.getElementById('modal-task-name').innerText = selectedTask.name;
+  document.getElementById('modal-task-time').innerText = selectedTask.alarm ? get24HourFormat(selectedTask.alarm) : 'No Alarm Set';
+  document.getElementById('modal-edit-button').addEventListener('click', function() {
+    editTask(selectedTask.id, event);
+    hideModal();
+  });
 }
 
 function hideModal() {
   modal.style.display = 'none';
+  tasksContainer.innerHTML = '';
+  tasks.forEach(task => renderTask(task));
 }
+

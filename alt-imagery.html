@@ -9,8 +9,9 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #ffffff;
-      height: 100vh;
+      background-image: url('blackSand.jpg');
+      background-size: cover;
+      background-position: center;
     }
 
     .container {
@@ -27,9 +28,7 @@
     .screen {
       width: 335px;
       height: 600px;
-      background-image: url('blackSand.jpg');
-      background-size: cover;
-      background-position: center;
+      background-color: white;
       border-radius: 20px;
       margin: 0 auto;
       position: relative;
@@ -106,6 +105,9 @@
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
       z-index: 999;
       display: none;
+      width: 400px;
+      height: 300px;
+      overflow-y: auto;
     }
 
     #modal ul {
@@ -127,6 +129,21 @@
 
     #modal button:hover {
       background-color: #d40b0b;
+    }
+
+    #modal table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    #modal th, #modal td {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    #modal th {
+      background-color: #f4f4f4;
     }
   </style>
 </head>
@@ -151,8 +168,21 @@
     </div>
   </div>
   <div id="modal">
-    <h3>All Tasks</h3>
-    <ul id="all-tasks"></ul>
+    <h3>Task Details</h3>
+    <table>
+      <tbody>
+        <tr>
+          <th>Task Name</th>
+          <td id="modal-task-name"></td>
+        </tr>
+        <tr>
+          <th>Alarm Time</th>
+          <td id="modal-task-time"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button onclick="editTask()">Edit</button>
+    <button onclick="deleteTask()">Delete</button>
     <button onclick="hideModal()">Close</button>
   </div>
   <script src="to-do.js"></script>
