@@ -1,3 +1,6 @@
+const tasksContainer = document.getElementById('tasks');
+const newTaskInput = document.getElementById('new-task');
+const newAlarmInput = document.getElementById('new-alarm');
 const taskList = document.getElementById('task-list');
 const message = document.getElementById('message');
 const modal = document.getElementById('modal');
@@ -39,19 +42,22 @@ function renderTask(task) {
     <label for="chk-${task.id}">${task.name}</label>
     ${task.alarm ? `<input type="time" value="${get24HourFormat(task.alarm)}" disabled>` : ''}
   `;
-  taskElement.addEventListener('click', function() {
-    this.classList.toggle('selected');
-    if (this.classList.contains('selected')) {
-      this.insertAdjacentHTML('beforeend', `
-        <button class="edit-button" onclick="editTask(${task.id}, event)">Edit</button>
-        <button class="delete-button" onclick="deleteTask(${task.id})">Delete</button>
-      `);
-    } else {
-      this.querySelector('.edit-button').remove();
-      this.querySelector('.delete-button').remove();
-    }
+  taskElement.addEventListener('click', function(event) {
+    event.stopPropagation();
+    const selectedTask = tasks.find(t => t.id === task.id);
+    document.getElementById('modal-task-name').innerText = selectedTask.name;
+    document.getElementById('modal-task-time').innerText = selectedTask.alarm ? get24HourFormat(selectedTask.alarm) : 'No Alarm Set';
+    document.getElementById('modal-edit-button').addEventListener('click', function() {
+      editTask(task.id);
+      hideModal();
+    });
+    document.getElementById('modal-delete-button').addEventListener('click', function() {
+      deleteTask(task.id);
+      hideModal();
+    });
+    modal.style.display = 'block';
   });
-  taskList.appendChild(taskElement);
+  tasksContainer.appendChild(taskElement);
 }
 
 function get24HourFormat(date) {
@@ -60,8 +66,7 @@ function get24HourFormat(date) {
   return `${hours}:${minutes}`;
 }
 
-function editTask(id, event) {
-  event.stopPropagation();
+function editTask(id) {
   const task = tasks.find(task => task.id === id);
   if (task) {
     const label = document.querySelector(`label[for="chk-${id}"]`);
@@ -80,12 +85,8 @@ function deleteTask(id) {
 }
 
 function addToTaskList(taskName) {
-  const listItem = document.createElement('li');
-  listItem.innerText = taskName;
-  taskList.appendChild(listItem);
-  const allTasksItem = document.createElement('li');
-  allTasksItem.innerText = taskName;
-  allTasksList.appendChild(allTasksItem);
+  taskList.innerHTML = tasks.map(task => `<li>${task.name}</li>`).join('');
+  allTasksList.innerHTML = tasks.map(task => `<li>${task.name}</li>`).join('');
 }
 
 function removeFromTaskList(taskName) {
@@ -109,43 +110,9 @@ function viewAllTasks() {
   tasksContainer.innerHTML = '';
   tasks.forEach(task => renderTask(task));
   modal.style.display = 'block';
-  updateTaskDetails();
-}
-
-function updateTaskDetails() {
-  const selectedTask = tasks.find(task => task.id === parseInt(document.querySelector('.selected').id.split('-')[1]));
-  document.getElementById('modal-task-name').innerText = selectedTask.name;
-  document.getElementById('modal-task-time').innerText = selectedTask.alarm ? get24HourFormat(selectedTask.alarm) : 'No Alarm Set';
-  document.getElementById('modal-edit-button').addEventListener('click', function() {
-    editTask(selectedTask.id, event);
-    hideModal();
-  });
 }
 
 function hideModal() {
   modal.style.display = 'none';
-  tasksContainer.innerHTML = '';
-  tasks.forEach(task => renderTask(task));
 }
 
-function addTasksToModal() {
-  const modalTable = document.querySelector('#modal tbody');
-  modalTable.innerHTML = '';
-
-  tasks.forEach(task => {
-    const row = document.createElement('tr');
-
-    const taskNameCell = document.createElement('td');
-    taskNameCell.textContent = task.name;
-
-    const alarmTimeCell = document.createElement('td');
-    alarmTimeCell.textContent = task.alarm ? get24HourFormat(task.alarm) : 'No Alarm Set';
-
-    row.appendChild(taskNameCell);
-    row.appendChild(alarmTimeCell);
-
-    modalTable.appendChild(row);
-  });
-}
-
-addTasksToModal();
