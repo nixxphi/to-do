@@ -41,12 +41,8 @@ function deleteTask(element) {
 }
 
 function editTask(element) {
-  const taskText = element.previousElementSibling.previousElementSibling.innerText;
-  const newTaskText = prompt('Edit task:', taskText);
-  if (newTaskText !== null && newTaskText !== '') {
-    element.previousElementSibling.previousElementSibling.innerText = newTaskText;
-    updateTaskList(taskText, newTaskText);
-  }
+  const label = element.previousElementSibling;
+  label.contentEditable = !label.contentEditable;
 }
 
 function addToTaskList(taskText) {
@@ -57,31 +53,4 @@ function addToTaskList(taskText) {
 
 function removeFromTaskList(taskText) {
   const items = taskList.getElementsByTagName('li');
-  for (let i = 0; i < items.length; i++) {
-    if (items[i].innerText === taskText) {
-      items[i].remove();
-      break;
-    }
-  }
-}
-
-function updateTaskList(oldTaskText, newTaskText) {
-  const items = taskList.getElementsByTagName('li');
-  for (let i = 0; i < items.length; i++) {
-    if (items[i].innerText === oldTaskText) {
-      items[i].innerText = newTaskText;
-      break;
-    }
-  }
-}
-
-function viewAllTasks() {
-  const tasks = document.querySelectorAll('.task');
-  const taskListItems = document.querySelectorAll('#task-list li');
-  if (tasks.length === 0) {
-    alert('No tasks to display.');
-  } else {
-    const allTasks = Array.from(taskListItems).map(li => li.innerText);
-    alert('All tasks:\n' + allTasks.join('\n'));
-  }
-}
+  for (let i = 0; i
