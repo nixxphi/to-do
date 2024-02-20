@@ -1,6 +1,3 @@
-const tasksContainer = document.getElementById('tasks');
-const newTaskInput = document.getElementById('new-task');
-const newAlarmInput = document.getElementById('new-alarm');
 const taskList = document.getElementById('task-list');
 const message = document.getElementById('message');
 const modal = document.getElementById('modal');
@@ -54,7 +51,7 @@ function renderTask(task) {
       this.querySelector('.delete-button').remove();
     }
   });
-  tasksContainer.appendChild(taskElement);
+  taskList.appendChild(taskElement);
 }
 
 function get24HourFormat(date) {
@@ -62,7 +59,6 @@ function get24HourFormat(date) {
   const minutes = String(date.getMinutes()).padStart(2, '0');
   return `${hours}:${minutes}`;
 }
-
 
 function editTask(id, event) {
   event.stopPropagation();
@@ -153,4 +149,3 @@ function addTasksToModal() {
 }
 
 addTasksToModal();
-
