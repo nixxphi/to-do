@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      height: 100vh;
+    }
+
+    .container {
+      width: 375px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f4f4f4;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .screen {
+      width: 335px;
+      height: 600px;
+      background-image: url('https://i.imgur.com/6fTOxrh.png');
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .task {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .task input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .task button {
+      background-color: #FF4136;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+    }
+
+    .task button:hover {
+      background-color: #d40b0b;
+    }
+
+    .task input[type="text"] {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+
+    .task input[type="time"] {
+      width: 80px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+
+    .task.alarm input[type="time"] {
+      background-color: #FF4136;
+      color: white;
+    }
+
+    .task.alarm input[type="time"]:focus {
+      background-color: #d40b0b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="screen">
+      <div class="content" id="todo-list">
+        <h2>To-Do List</h2>
+        <div id="tasks"></div>
+        <div>
+          <input type="text" id="new-task" placeholder="Add a new task">
+          <input type="time" id="new-alarm" placeholder="Set Alarm">
+          <button onclick="addTask()">Add Task</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
