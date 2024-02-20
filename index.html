@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    #todo-list {
+      max-width: 400px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .task {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .task input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .task button {
+      background-color: #FF4136;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+    }
+
+    .task button:hover {
+      background-color: #d40b0b;
+    }
+
+    .task input[type="text"] {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+
+    .task input[type="time"] {
+      width: 80px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+
+    .task.alarm input[type="time"] {
+      background-color: #FF4136;
+      color: white;
+    }
+
+    .task.alarm input[type="time"]:focus {
+      background-color: #d40b0b;
+    }
+  </style>
+</head>
+<body>
+  <div id="todo-list">
+    <h2>To-Do List</h2>
+    <div id="tasks"></div>
+    <div>
+      <input type="text" id="new-task" placeholder="Add a new task">
+      <input type="time" id="new-alarm" placeholder="Set Alarm">
+      <button onclick="addTask()">Add Task</button>
+    </div>
+  </div>
+  <script src="to-do.js"></script>
+</body>
+</html>
