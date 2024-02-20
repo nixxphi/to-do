@@ -9,23 +9,22 @@ const allTasksList = document.getElementById('all-tasks');
 let tasks = [];
 
 function addTask() {
-  const taskText = newTaskInput.value.trim();
+  const taskName = newTaskInput.value.trim();
   const alarmTime = newAlarmInput.value.trim();
-  if (taskText !== '') {
+  if (taskName !== '') {
     const task = {
       id: Date.now(),
-      text: taskText,
+      name: taskName,
       alarm: alarmTime,
     };
     tasks.push(task);
-    renderTask(task);
     newTaskInput.value = '';
     newAlarmInput.value = '';
     message.innerText = 'One more thing to do...';
     setTimeout(() => {
       message.innerText = '';
     }, 2000);
-    addToTaskList(taskText);
+    addToTaskList(taskName);
     if (alarmTime) {
       const time = new Date(alarmTime);
       setTimeout(() => {
@@ -40,15 +39,26 @@ function renderTask(task) {
   taskElement.className = 'task';
   taskElement.innerHTML = `
     <input type="checkbox" id="chk-${task.id}">
-    <label for="chk-${task.id}">${task.text}</label>
+    <label for="chk-${task.id}">${task.name}</label>
     ${task.alarm ? `<input type="time" value="${task.alarm}">` : ''}
-    <button onclick="deleteTask(${task.id})">Delete</button>
-    <button onclick="editTask(${task.id})">Edit</button>
   `;
+  taskElement.addEventListener('click', function() {
+    this.classList.toggle('selected');
+    if (this.classList.contains('selected')) {
+      this.insertAdjacentHTML('beforeend', `
+        <button class="edit-button" onclick="editTask(${task.id}, event)">Edit</button>
+        <button class="delete-button" onclick="deleteTask(${task.id})">Delete</button>
+      `);
+    } else {
+      this.querySelector('.edit-button').remove();
+      this.querySelector('.delete-button').remove();
+    }
+  });
   tasksContainer.appendChild(taskElement);
 }
 
-function editTask(id) {
+function editTask(id, event) {
+  event.stopPropagation();
   const task = tasks.find(task => task.id === id);
   if (task) {
     const label = document.querySelector(`label[for="chk-${id}"]`);
@@ -62,43 +72,39 @@ function deleteTask(id) {
   taskElement.remove();
   const task = tasks.find(task => task.id === id);
   if (task) {
-    removeFromTaskList(task.text);
+    removeFromTaskList(task.name);
   }
 }
 
-function addToTaskList(taskText) {
+function addToTaskList(taskName) {
   const listItem = document.createElement('li');
-  listItem.innerText = taskText;
+  listItem.innerText = taskName;
   taskList.appendChild(listItem);
   const allTasksItem = document.createElement('li');
-  allTasksItem.innerText = taskText;
+  allTasksItem.innerText = taskName;
   allTasksList.appendChild(allTasksItem);
 }
 
-function removeFromTaskList(taskText) {
+function removeFromTaskList(taskName) {
   const items = taskList.getElementsByTagName('li');
   for (let i = 0; i < items.length; i++) {
-    if (items[i].innerText === taskText) {
+    if (items[i].innerText === taskName) {
       items[i].remove();
       break;
     }
   }
   const allItems = allTasksList.getElementsByTagName('li');
   for (let i = 0; i < allItems.length; i++) {
-    if (allItems[t].innerText === taskText) {
-      allItems[t].remove();
+    if (allItems[i].innerText === taskName) {
+      allItems[i].remove();
       break;
     }
   }
 }
 
 function viewAllTasks() {
-  allTasksList.innerHTML = '';
-  tasks.forEach(task => {
-    const listItem = document.createElement('li');
-    listItem.innerText = task.text;
-    allTasksList.appendChild(listItem);
-  });
+  tasksContainer.innerHTML = '';
+  tasks.forEach(task => renderTask(task));
   modal.style.display = 'block';
 }
 

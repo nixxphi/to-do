@@ -94,6 +94,40 @@
     .list {
       margin-top: 20px;
     }
+
+    #modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      z-index: 999;
+      display: none;
+    }
+
+    #modal ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #modal button {
+      margin-top: 20px;
+      background-color: #FF4136;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+    }
+
+    #modal button:hover {
+      background-color: #d40b0b;
+    }
   </style>
 </head>
 <body>
@@ -115,6 +149,11 @@
         </div>
       </div>
     </div>
+  </div>
+  <div id="modal">
+    <h3>All Tasks</h3>
+    <ul id="all-tasks"></ul>
+    <button onclick="hideModal()">Close</button>
   </div>
   <script src="to-do.js"></script>
 </body>
