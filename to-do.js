@@ -132,3 +132,22 @@ function hideModal() {
   tasks.forEach(task => renderTask(task));
 }
 
+function addTasksToModal() {
+  const modalTable = document.querySelector('#modal tbody');
+  modalTable.innerHTML = '';
+
+  tasks.forEach(task => {
+    const row = document.createElement('tr');
+
+    const taskNameCell = document.createElement('td');
+    taskNameCell.textContent = task.name;
+
+    const alarmTimeCell = document.createElement('td');
+    alarmTimeCell.textContent = task.alarm ? get24HourFormat(task.alarm) : 'No Alarm Set';
+
+    row.appendChild(taskNameCell);
+    row.appendChild(alarmTimeCell);
+
+    modalTable.appendChild(row);
+  });
+}

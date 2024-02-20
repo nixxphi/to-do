@@ -95,56 +95,57 @@
     }
 
     #modal {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-      z-index: 999;
-      display: none;
-      width: 400px;
-      height: 300px;
-      overflow-y: auto;
-    }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  display: none;
+  width: 400px;
+  height: 300px;
+  overflow-y: auto;
+}
 
-    #modal ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+#modal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-    #modal button {
-      margin-top: 20px;
-      background-color: #FF4136;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 3px;
-      transition: background-color 0.3s;
-    }
+#modal button {
+  margin-top: 20px;
+  background-color: #FF4136;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s;
+}
 
-    #modal button:hover {
-      background-color: #d40b0b;
-    }
+#modal button:hover {
+  background-color: #d40b0b;
+}
 
-    #modal table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
+#modal table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
 
-    #modal th, #modal td {
-      border: 1px solid #ccc;
-      padding: 10px;
-    }
+#modal th, #modal td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
 
-    #modal th {
-      background-color: #f4f4f4;
-    }
+#modal th {
+  background-color: #f4f4f4;
+}
+
   </style>
 </head>
 <body>
@@ -184,7 +185,7 @@
     <button onclick="editTask()">Edit</button>
     <button onclick="deleteTask()">Delete</button>
     <button onclick="hideModal()">Close</button>
-  </div>
+  </div>  
   <script src="to-do.js"></script>
 </body>
 </html>
