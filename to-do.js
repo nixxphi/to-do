@@ -34,15 +34,15 @@ function addTask() {
   }
 }
 
-function deleteTask(element) {
-  element.parentElement.remove();
-  const taskText = element.previousElementSibling.innerText;
-  removeFromTaskList(taskText);
+function editTask(element) {
+  const label = element.previousElementSibling.previousElementSibling;
+  label.contentEditable = !label.contentEditable;
 }
 
-function editTask(element) {
-  const label = element.previousElementSibling;
-  label.contentEditable = !label.contentEditable;
+function deleteTask(element) {
+  element.parentElement.remove();
+  const taskText = element.previousElementSibling.previousElementSibling.innerText;
+  removeFromTaskList(taskText);
 }
 
 function addToTaskList(taskText) {
@@ -53,4 +53,10 @@ function addToTaskList(taskText) {
 
 function removeFromTaskList(taskText) {
   const items = taskList.getElementsByTagName('li');
-  for (let i = 0; i
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].innerText === taskText) {
+      items[i].remove();
+      break;
+    }
+  }
+}
