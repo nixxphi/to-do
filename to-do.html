@@ -21,14 +21,20 @@
           <input type="text" id="new-task" placeholder="Add a new task lazy ass.">
           <input type="time" id="new-alarm">
           <button onclick="addTask()">+</button>
-          <audio id="alarmAudio" src="alarmAudio.mp3"></audio>
+          <audio id="alarmSound" src="https://github.com/nixxphi/to-do/blob/49400523c7f94fc1825c8811fdbacd415f123106/alarmAudio.mp3"></audio>
         </div>
         <p id="message"></p>
         <div class="list">
           <h3>Task List</h3>
           <ul id="task-list"></ul>
         </div>
-        <div class="clock" id="clock"></div>
+        <div id="clock" class="digital"></div>
+        <div id="clockAnalogue" class="analogue">
+          <div class="clock">
+            <div id="hourHand" class="hand hour"></div>
+            <div id="minuteHand" class="hand minute"></div>
+            <div id="secondHand" class="hand second"></div>
+          </div>
       </div>
     </div>
   </div>
