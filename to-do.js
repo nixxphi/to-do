@@ -25,6 +25,7 @@ function addTask() {
 function renderTask(task) {
   const taskElement = document.createElement('div');
   taskElement.className = 'task';
+  taskElement.id = `task-${task.id}`;
   taskElement.innerHTML = `
     <label for="chk-${task.id}">${task.name} | ${task.alarm}</label>
     <div class="floating-menu">
@@ -58,18 +59,10 @@ function editTask(id) {
 }
 
 function deleteTask(id) {
-  const task = tasks.find(task => task.id === id);
-  const taskElement = document.querySelector(`.task-${id}`);
-  taskElement.style.textDecoration = 'line-through';
-  taskElement.style.opacity = 0;
-  setTimeout(() => {
-      tasks = tasks.filter(task => task.id !== id);
-      taskElement.remove();
-  }, 100);
-  if (!task) return;
+  const taskElement = document.getElementById(`task-${id}`);
+  taskElement.remove();
+  tasks = tasks.filter(task => task.id !== id);
 }
-
-
 
 function updateClock() {
   const date = new Date();
