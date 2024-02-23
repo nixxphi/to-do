@@ -225,7 +225,102 @@
     <button id="modal-delete-button">Delete</button>
     <button onclick="hideModal()">Close</button>
   </div>
-  <script src="to-do.js">
-  </script>
+  <script>const tasksContainer = document.getElementById('tasks');
+    const newTaskInput = document.getElementById('new-task');
+    const newAlarmInput = document.getElementById('new-alarm');
+    const taskList = document.getElementById('task-list');
+    const message = document.getElementById('message');
+    const modal = document.getElementById('modal');
+    const modalEditButton = document.getElementById('modal-edit-button');
+    const modalDeleteButton = document.getElementById('modal-delete-button');
+    const clockElement = document.getElementById('clock');
+    
+    let tasks = [];
+    
+    function addTask() {
+      const taskName = newTaskInput.value.trim();
+      const alarmTime = newAlarmInput.value.trim();
+      if (taskName !== '') {
+        const task = {
+          id: Date.now(),
+          name: taskName,
+          alarm: alarmTime ? alarmTime : null,
+        };
+        tasks.push(task);
+        newTaskInput.value = '';
+        newAlarmInput.value = '';
+        message.innerText = '';
+        renderTask(task);
+      }
+    }
+    
+    function renderTask(task) {
+    const taskElement = document.createElement('div');
+    taskElement.className = 'task';
+    taskElement.innerHTML = `
+    <label for="chk-${task.id}">${task.name} | ${task.alarm}</label>
+    <div class="floating-menu">
+      <button onclick="editTask(${task.id})">[...]</button>
+      <button onclick="deleteTask(${task.id})">x</button>
+    </div>
+    `;
+    taskList.appendChild(taskElement);
+    }
+    
+    function editTask(id) {
+    const task = tasks.find(task => task.id === id);
+    if (task) {
+    const newName = prompt('Enter new task name:', task.name);
+    if (newName) {
+      task.name = newName;
+      const label = document.querySelector(`label[for="chk-${id}"]`);
+      label.innerText = `${task.name} | ${get24HourFormat(task.alarm)}`;
+    }
+    if (task.alarm) {
+      const newTime = prompt('Enter new alarm time:', get24HourFormat(task.alarm));
+      if (newTime) {
+        task.alarm = newTime;
+        const label = document.querySelector(`label[for="chk-${id}"]`);
+        label.innerText = `${task.name} | ${get24HourFormat(new Date(task.alarm))}`;
+      }
+    }
+   }
+ }
+
+    function deleteTask(id) {
+  const taskElement = document.getElementById(`task-${id}`);
+  taskElement.style.textDecoration = 'line-through';
+  taskElement.style.opacity = 0;
+  setTimeout(() => {
+    tasks = tasks.filter(task => task.id !== id);
+    taskElement.remove();
+  }, 500);
+}
+
+    
+    
+    
+    function viewAllTasks() {
+      tasksContainer.innerHTML = '';
+      tasks.forEach(task => renderTask(task));
+      modal.style.display = 'block';
+    }
+    
+    function hideModal() {
+      modal.style.display = 'none';
+    }
+    
+    function updateClock() {
+      const date = new Date();
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const seconds = date.getSeconds().toString().padStart(2, '0');
+      const time = `${hours}:${minutes}:${seconds}`;
+      clockElement.innerText = time;
+    }
+    
+    updateClock();
+    setInterval(updateClock, 1000);
+      </script>
 </body>
 </html>
