@@ -31,6 +31,8 @@ function renderTask(task) {
     <div class="floating-menu">
       <button onclick="editTask(${task.id})">[...]</button>
       <button onclick="deleteTask(${task.id})">[.x.]</button>
+      <button onclick="completedTask(${task.id})">&#x2713;</button>
+
     </div>
   `;
   tasksContainer.appendChild(taskElement);
@@ -60,18 +62,31 @@ function editTask(id) {
 
 function deleteTask(id) {
   const taskElement = document.getElementById(`task-${id}`);
-  taskElement.remove();
-  tasks = tasks.filter(task => task.id !== id);
+  taskElement.style.textDecoration = 'line-through';
+  setTimeout(() => {
+    taskElement.remove();
+    tasks = tasks.filter(task => task.id !== id);
+  }, 500);
 }
 
-function updateClock() {
-  const date = new Date();
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  const seconds = date.getSeconds().toString().padStart(2, '0');
-  const time = `${hours}:${minutes}:${seconds}`;
-  clockElement.innerText = time;
+function completedTask(id) {
+  const taskElement = document.getElementById(`task-${id}`);
+  if (taskElement) {
+    const label = taskElement.querySelector('label');
+    label.style.color = 'green';
+    label.style.textDecoration = 'line-through';
+  }
 }
 
-updateClock();
-setInterval(updateClock, 1000);
+
+function checkAlarms() {
+  const now = new Date();
+  tasks.forEach(task => {
+    if (task.alarm && new Date(task.alarm) <= now) {
+      const audioElement = document.getElementById('alarmAudio');
+      audioElement.play();
+      alert(`Time for task: ${task.name}`);
+      deleteTask(task.id);
+    }
+  });
+}
