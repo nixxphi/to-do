@@ -29,7 +29,7 @@ function renderTask(task) {
     <label for="chk-${task.id}">${task.name} | ${task.alarm}</label>
     <div class="floating-menu">
       <button onclick="editTask(${task.id})">[...]</button>
-      <button onclick="deleteTask(${task.id})">x</button>
+      <button onclick="deleteTask(${task.id})">[.x.]</button>
     </div>
   `;
   tasksContainer.appendChild(taskElement);
@@ -59,15 +59,14 @@ function editTask(id) {
 
 function deleteTask(id) {
   const task = tasks.find(task => task.id === id);
-  if (!task) return;
-  
   const taskElement = document.querySelector(`.task-${id}`);
   taskElement.style.textDecoration = 'line-through';
   taskElement.style.opacity = 0;
   setTimeout(() => {
       tasks = tasks.filter(task => task.id !== id);
       taskElement.remove();
-  }, 500);
+  }, 100);
+  if (!task) return;
 }
 
 
