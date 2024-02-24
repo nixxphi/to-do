@@ -5,7 +5,7 @@ body {
     background-image: url('blackSand.jpg');
     background-size: cover;
     background-position: center;
-    color: white;
+    color: black;
   }
 
   .container {
@@ -162,7 +162,7 @@ body {
   }
   .digital {
     font-family: Arial, sans-serif;
-    font-size: 0.5em; 
+    font-size: 1.0em; 
     color: white;
     background-color: black;
     padding: 2.5px 5px;
