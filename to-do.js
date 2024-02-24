@@ -115,67 +115,12 @@ function updateClock() {
   document.getElementById('clock').innerText = time;
 }
 
-function updateClockAnalogue() {
-  const date = new Date();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-  const hourDeg = (hours % 12) * 30 + (minutes / 60) * 30;
-  const minuteDeg = minutes * 6 + (seconds / 60) * 6;
-  const secondDeg = seconds * 6;
-  document.getElementById('hourHand').style.transform = `rotate(${hourDeg}deg)`;
-  document.getElementById('minuteHand').style.transform = `rotate(${minuteDeg}deg)`;
-  document.getElementById('secondHand').style.transform = `rotate(${secondDeg}deg)`;
-}
 
 updateClock();
-updateClockAnalogue();
 setInterval(() => {
   updateClock();
-  updateClockAnalogue();
 }, 1000);
 
-
-  document.getElementById('clock').classList.toggle('digital');
-  document.getElementById('clock').classList.toggle('analogue');
-  //after putting in the defunct alarm(couldn't get it to make a sound), i realized this could use a clock.
-  //I'm just goofing off at this point
-  function createAnalogClock() {
-    const analogClock = document.createElement('div');
-    analogClock.id = 'analog-clock';
-    
-    const hourHand = document.createElement('div');
-    hourHand.className = 'hour-hand';
-    
-    const minuteHand = document.createElement('div');
-    minuteHand.className = 'minute-hand';
-    
-    const secondHand = document.createElement('div');
-    secondHand.className = 'second-hand';
-    
-    analogClock.appendChild(hourHand);
-    analogClock.appendChild(minuteHand);
-    analogClock.appendChild(secondHand);
-    
-    document.body.appendChild(analogClock);
-    analogClock.style.display = 'block';
-  }
-  
-  function updateAnalogClock() {
-    const date = new Date();
-    const hours = date.getHours() % 12;
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    
-    const hourAngle = (hours * 30) + (minutes * 0.5);
-    const minuteAngle = (minutes * 6) + (seconds * 0.1);
-    const secondAngle = seconds * 6;
-    
-    document.querySelector('.hour-hand').style.transform = `rotate(${hourAngle}deg)`;
-    document.querySelector('.minute-hand').style.transform = `rotate(${minuteAngle}deg)`;
-    document.querySelector('.second-hand').style.transform = `rotate(${secondAngle}deg)`;
-  }
-  
-  createAnalogClock();
-  setInterval(updateAnalogClock, 1000);
+ //after putting in the defunct alarm(couldn't get it to make a sound), i realized this could use a clock.
+ //I'm just goofing off at this point
   
