@@ -34,6 +34,12 @@ function addTask() {
     }
   }
 }
+document.getElementById('new-task').addEventListener('keyup', function(event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    addTask();
+  }
+});
 
 
 
