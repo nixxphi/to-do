@@ -162,78 +162,14 @@ body {
   }
   .digital {
     font-family: Arial, sans-serif;
-    font-size: 1.5em; 
+    font-size: 0.5em; 
     color: white;
     background-color: black;
-    padding: 5px 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    padding: 2.5px 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     position: fixed; 
     bottom: 20px; 
     right: 20px; 
     z-index: 10; 
   }
-  
-  .analogue {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 10;
-  }
-  
-  #analog-clock {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background-color: white;
-    border: 3px solid black;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5em;
-    overflow: hidden; 
-  }
-  
-  #analog-clock:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url('clockFace.png');
-    background-size: cover;
-    border-radius: 50%;
-    transform: rotate(0deg);
-    z-index: -1;
-  }
-  
-  #analog-clock .hour,
-  #analog-clock .minute,
-  #analog-clock .second {
-    position: absolute;
-    width: 2px;
-    height: 40px;
-    background-color: black;
-    border-radius: 10px;
-    transform-origin: bottom center;
-  }
-  
-  #analog-clock .hour {
-    background-color: blue; 
-    transform: rotate(0deg);
-  }
-  
-  #analog-clock .minute {
-    background-color: green; 
-    transform: rotate(0deg); 
-  }
-  
-  #analog-clock .second {
-    background-color: red;
-    transform: rotate(0deg); 
-  }
-  
