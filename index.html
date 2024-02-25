@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-<!-- I cannot waste time explaining markdown language,the js part of this is troublesome enough -->
+<!-- I cannot waste time explaining markup language,the js part of this is troublesome enough -->
     <div class="decorative-border">
         <span class="decorative-icon">&#9733;</span>
         <span class="decorative-text">Learnable Task 7</span>
@@ -21,7 +21,11 @@
           <input type="text" id="new-task" placeholder="Add a new task lazy ass...">
           <input type="time" id="new-alarm">
           <button onclick="addTask()">+</button>
-         
+          <audio id="alarmSound" src="https://github.com/nixxphi/to-do/blob/49400523c7f94fc1825c8811fdbacd415f123106/alarmAudio.mp3" preload="auto"></audio>
+          <video id="slideUpVideo" autoplay loop muted class="dismissed">
+            <source src="alarmVid.mp4" type="video/mp4">
+                        <!--Testing alarm media, audio vs video-->
+          </video>
         </div>
         <p id="message"></p>
         <div class="list">
@@ -36,6 +40,5 @@
   </div>
   <script src="to-do.js">
   </script>
-  <audio id="alarmSound" src="path/to/alarmSound.mp3" preload="auto"></audio>
 </body>
 </html>

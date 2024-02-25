@@ -96,59 +96,8 @@ body {
     display: block;
   }
 
-  #modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    z-index: 999;
-    display: none;
-    width: 400px;
-    height: 300px;
-    overflow-y: auto;
-  }
 
-  #modal ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  #modal button {
-    margin-top: 20px;
-    background-color: #FF4136;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: background-color 0.3s;
-  }
-
-  #modal button:hover {
-    background-color: #d40b0b;
-  }
-
-  #modal table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-
-  #modal th, #modal td {
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
-
-  #modal th {
-    background-color: #f4f4f4;
-  }
-
-    .decorative-border {
+  .decorative-border {
     border: 2px solid white;
     border-radius: 10px;
     padding: 10px;
@@ -173,3 +122,22 @@ body {
     right: 20px; 
     z-index: 10; 
   }
+  #slideUpVideo {
+    position: fixed;
+    bottom: -300px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 200px;
+    transition: bottom 0.5s ease-in-out;
+    z-index: 9999;
+  }
+  
+  #slideUpVideo.dismissed {
+    bottom: -300px;
+  }
+  
+  #slideUpVideo.show {
+    bottom: 0;
+  }
+  
