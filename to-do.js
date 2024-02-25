@@ -12,28 +12,43 @@ function addTask() {
     const task = {
       id: Date.now(),
       name: taskName,
-      alarm: alarmTime ? alarmTime : null,
+      alarm: alarmTime ? alarmTime : '',
     };
     tasks.push(task);
     newTaskInput.value = '';
     newAlarmInput.value = '';
     message.innerText = '';
     renderTask(task);
-    
-    // I'm gonna try to make it play a sound when the alarm time is up
-    if (task.alarm) {
-      const alarmTimeMs = new Date(task.alarm).getTime();
-      const currentTimeMs = new Date().getTime();
-      const timeDifferenceMs = alarmTimeMs - currentTimeMs;
-      
-      if (timeDifferenceMs > 0) {
-        setTimeout(() => {
-          document.getElementById('alarmSound').play();
-        }, timeDifferenceMs);
-      }
-    }
+    activateAlarm(task); 
   }
 }
+
+    // I'm gonna try to make it play a sound when the alarm time is up
+function activateAlarm(task) {
+  if (task) {
+    if (task.alarm) {
+      const alarmTime = new Date(task.alarm);
+      const intervalId = setInterval(() => {
+        const currentTime = new Date();
+        if (currentTime >= alarmTime) {
+          clearInterval(intervalId); 
+          const alarmSound = document.getElementById('alarmSound');
+          if (alarmSound) {
+            alarmSound.play();
+          } else {
+            console.error('Alarm sound element not found.');
+          }
+        }
+      }, 1000); // Check every second
+    } else {
+      console.error('Task has no alarm set.');
+    }
+  } else {
+    console.error('No task provided.');
+  }
+}
+
+    
 document.getElementById('new-task').addEventListener('keyup', function(event) {
   if (event.key === 'Enter') {
     event.preventDefault();
@@ -50,13 +65,48 @@ function renderTask(task) {
   taskElement.innerHTML = `
     <label for="chk-${task.id}">${task.name} | ${task.alarm}</label>
     <div class="floating-menu">
-      <button onclick="editTask(${task.id})">[...]</button>
-      <button onclick="deleteTask(${task.id})">[.x.]</button>
+      <button onclick="editTask(${task.id})">Edit</button>
+      <button onclick="deleteTask(${task.id})">x</button>
       <button onclick="completedTask(${task.id})">&#x2713;</button>
-
     </div>
   `;
+  
+  if (task.completed) {
+    taskElement.innerHTML += `
+      <button onclick="undoCompletedTask(${task.id})">Undo</button>
+    `;
+  }
+  
   tasksContainer.appendChild(taskElement);
+}
+
+function completedTask(id) {
+  const taskElement = document.getElementById(`task-${id}`);
+  if (taskElement) {
+    const label = taskElement.querySelector('label');
+    label.style.color = 'green';
+    label.style.textDecoration = 'line-through';
+    
+    const floatingMenu = taskElement.querySelector('.floating-menu');
+    floatingMenu.innerHTML += `
+      <button onclick="undoCompletedTask(${id})">Undo</button>
+    `;
+  }
+}
+
+function undoCompletedTask(id) {
+  const taskElement = document.getElementById(`task-${id}`);
+  if (taskElement) {
+    const label = taskElement.querySelector('label');
+    label.style.color = '';
+    label.style.textDecoration = '';
+    
+    const floatingMenu = taskElement.querySelector('.floating-menu');
+    const undoButton = floatingMenu.querySelector('button:last-child');
+    if (undoButton) {
+      floatingMenu.removeChild(undoButton);
+    }
+  }
 }
 
 function editTask(id) {
@@ -90,27 +140,21 @@ function deleteTask(id) {
   }, 500);
 }
 
-function completedTask(id) {
-  const taskElement = document.getElementById(`task-${id}`);
-  if (taskElement) {
-    const label = taskElement.querySelector('label');
-    label.style.color = 'green';
-    label.style.textDecoration = 'line-through';
-  }
-}
-
 
 function checkAlarms() {
   const now = new Date();
   tasks.forEach(task => {
     if (task.alarm && new Date(task.alarm) <= now) {
-      const audioElement = document.getElementById('alarmSound');
+      const audioElement = document.getElementByTitle('alarmAudio.mp3');
       audioElement.play();
-      alert(`Time for task: ${task.name}`);
+      alert(`It's time for you to ${task.name}`);
       deleteTask(task.id);
     }
   });
 }
+
+setInterval(checkAlarms, 1000);
+
 
 function updateClock() {
   const date = new Date();
